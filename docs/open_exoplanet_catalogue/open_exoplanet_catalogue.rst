@@ -34,20 +34,20 @@ First import the module and generate the catalogue. The findvalue function provi
         from astroquery import open_exoplanet_catalogue as oec
         from astorquery.open_exoplanet_catalogue import findvalue
 
-        cata = oec.get_catalogue()
+        cata = cata.get_catalogue()
 
 Prints all planets and their masses.
 
 .. code-block:: python
 
-    for planet in oec.findall(".//planet"):
+    for planet in cata.findall(".//planet"):
         print findvalue(planet, 'name'), findvalue(planet, 'mass')
 
 Prints all of the planets with known mass around stars of known mass in a machine readable format.
 
 .. code-block:: python
 
-    for star in oec.findall(".//star[mass]"):
+    for star in cata.findall(".//star[mass]"):
         for planet in star.findall(".//planet[mass]"):
             print findvalue(planet, 'mass').machine_readable(), findvalue(star, 'mass').machine_readable()
 
@@ -55,28 +55,28 @@ Print all the names of stars in binaries.
          
 .. code-block:: python
 
-    for star in oec.findall(".//binary/star"):
+    for star in cata.findall(".//binary/star"):
         print findvalue(star, 'name')
 
 Prints all the planet names and period of planets around binaries
 
 .. code-block:: python
 
-    for planet in oec.findall(".//binary/planet"):
+    for planet in cata.findall(".//binary/planet"):
         print findvalue( planet, 'name'), findvalue( planet, 'period')
 
 Prints the name, radius and mass of the planet Kepler-68 b. 
 
 .. code-block:: python
 
-    planet = oec.find(".//planet[name='Kepler-68 b']")
+    planet = cata.find(".//planet[name='Kepler-68 b']")
     print findvalue( planet, 'name'), findvalue(planet, 'radius'), findvalue(planet, 'mass')
 
 Prints the name and radius of planets with a radius greater than 1 jupiter radius.
 
 .. code-block:: python
 
-    for planet in oec.findall(".//planet[radius]"):
+    for planet in cata.findall(".//planet[radius]"):
         if findvalue(planet, 'radius') > 1:
             print findvalue( planet, 'name'), findvalue( planet, 'radius')
 
@@ -84,14 +84,14 @@ Prints the names of the planets around a single star in a binary.
 
 .. code-block:: python
 
-    for binary in oec.findall(".//binary/star/planet"):
+    for binary in cata.findall(".//binary/star/planet"):
         print findvalue( binary, 'name')
 
 Prints a ratio of star and planet mass.
 
 .. code-block:: python
 
-    for star in oec.findall(".//star[mass]/planet[mass].."):
+    for star in cata.findall(".//star[mass]/planet[mass].."):
         if findvalue(star, 'mass') != None:
             for planet in star.findall(".//planet"):
                 if findvalue(planet, 'mass') != None:
@@ -101,7 +101,7 @@ Prints planets whose mass has an upper limit
 
 .. code-block:: python
 
-    for planet in oec.findall(".//planet/mass[@upperlimit].."):
+    for planet in cata.findall(".//planet/mass[@upperlimit].."):
         print findvalue( planet, 'name'), findvalue(planet, 'mass')
    
 Prints all stars with the number of planets orbiting them
@@ -109,21 +109,21 @@ Prints all stars with the number of planets orbiting them
 .. code-block:: python
 
 
-    for star in oec.findall(".//star[planet]"):
+    for star in cata.findall(".//star[planet]"):
         print findvalue( star, 'name'), len(star.findall(".//planet"))
 
 Prints all the properties of Kepler-20 b.
 
 .. code-block:: python
 
-    for properties in oec.findall(".//planet[name='Kepler-20 b']/*"):
+    for properties in cata.findall(".//planet[name='Kepler-20 b']/*"):
         print "\t" + properties.tag + ":", properties.text
 
 Prints the right ascension and declination of systems with planets of known mass.
 
 .. code-block:: python
 
-    for systems in oec.findall(".//system[declination][rightascension]"):
+    for systems in cata.findall(".//system[declination][rightascension]"):
         for planet in systems.findall(".//planet[mass]"):
             print findvalue( systems, 'name'), findvalue( systems, 'rightascension'), findvalue( systems, 'declination'), findvalue( planet, 'mass')
 
@@ -131,7 +131,7 @@ Prints the names of rogue planets.
 
 .. code-block:: python
 
-    for planets in oec.findall(".//system/planet"):
+    for planets in cata.findall(".//system/planet"):
         print findvalue( planets, 'name')
 
 Reference
